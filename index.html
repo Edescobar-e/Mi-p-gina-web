@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículum Profesional</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        #curriculum {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 700px;
+            width: calc(100% - 40px);
+            margin-bottom: 20px;
+            opacity: 0; /* Comienza oculto */
+            transform: translateY(-20px); /* Desplazado hacia arriba */
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Transición suave */
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        button.accordion {
+            background-color: #3498db; /* Color azul */
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button.accordion:hover {
+            background-color: #2980b9; /* Color azul oscuro al pasar el mouse */
+        }
+        div.panel {
+            padding-left: 15px; 
+            display: none; /* Oculto por defecto */
+            overflow: hidden; 
+        }
+        ul {
+            list-style-type: none; 
+        }
+        li {
+            background-color: #ecf0f1; 
+            border-radius: 5px; 
+            margin-top :8px ;
+           padding :12px ;
+           transition :transform .2s ease ;/*Animación Hover*/
+       }
+       li:hover {
+           transform :scale(1.02); /* Efecto al pasar el mouse sobre los elementos de la lista */
+       }
+       #user-input {
+           background-color:#ffffff;
+           border-radius:15px;
+           box-shadow:0 4px 15px rgba(0, 0, 0, 0.2);
+           padding:20px;
+           max-width:400px;
+           width:calc(100% - 40px);
+       }
+       input[type="text"] {
+           padding:10px;
+           width:calc(100% - 22px);
+           border-radius:5px;
+           border:1px solid #ccc;
+       }
+       button.submit-button {
+           padding:10px 15px;
+           margin-top:10px;
+           background-color:#3498db; /* Color azul */
+           color:white;
+           border:none;
+           border-radius:5px;
+       }
+       button.submit-button:hover {
+          background-color:#2980b9; /* Color azul oscuro al pasar el mouse */
+       }
+
+      /* Responsividad */
+      @media (max-width:768px) { 
+          h1 { 
+              font-size :larger; 
+          }
+          #curriculum { 
+              padding :20px; 
+          }
+          button { 
+              width :100%; /* Botón ocupa el ancho completo en pantallas pequeñas */ 
+          }
+          input[type="text"] { 
+              width :100%; /* Input ocupa el ancho completo en pantallas pequeñas */ 
+          }
+      }
+
+      img.profile-pic {
+          width :100px; /* Ajusta el tamaño de la imagen según sea necesario */
+          height:auto; /* Mantiene la proporción de la imagen */
+          border-radius :50%; /* Hace que la imagen sea circular */
+      }
+
+      .fade-in {
+          opacity: 1; /* Hacer visible */
+          transform: translateY(0); /* Regresar a posición original */
+      }
+
+      .fade-message {
+          opacity: 0; /* Comienza oculto */
+          transition: opacity 1s ease; /* Transición suave para el mensaje */
+      }
+
+      .fade-message.show {
+          opacity: 1; /* Hacer visible cuando se añade la clase 'show' */
+      }
+
+    </style>
+</head>
+<body>
+    <h1>Currículum Profesional</h1>
+
+    <!-- Foto del profesional -->
+    <img src="https://static.vecteezy.com/system/resources/previews/014/554/760/non_2x/man-profile-negative-photo-anonymous-silhouette-human-head-businessman-worker-support-illustration-vector.jpg" alt="Foto de Emilio Escobar" class="profile-pic">
+
+    <!-- Div para mostrar el currículum -->
+    <div id="curriculum"></div>
+
+    <!-- Sección para ingresar el nombre del usuario -->
+    <div id="user-input" style="display:none;">
+        <label for="user-name">Ingresa tu nombre:</label><br>
+        <input type="text" id="user-name" placeholder="Escribe tu nombre aquí" />
+        <button class="submit-button" id="submit-button">Enviar</button>
+    </div>
+
+    <!-- Div para mostrar el mensaje final -->
+    <div class="message fade-message" id="final-message"></div>
+
+    <script>
+       // Función para generar un currículum ficticio
+       function generarCurriculum() {
+           const curriculum = {
+               nombre:"Emilio Escobar",
+               edad :18,
+               ubicacion:"Quito, Ecuador",
+               profesion :"Estudiante de Ingeniería en Ciencia de Datos",
+               habilidades :[
+                   { nombre:"Python", descripcion:"Conocimiento básico del funcionamiento de Python." },
+                   { nombre:"R", descripcion:"Conocimiento básico del funcionamiento de R." }
+               ],
+               experiencia:[
+                   { descripcion :"Experiencia en asuntos personales relacionados con la programación y datos en la nube." }
+               ],
+               educacion:[
+                   { institucion :"Colegio Cardenal Spellman", titulo :"Graduado", añoGraduacion :"2024" },
+                   { institucion :"PUCE", titulo :"Estudiante de Ingeniería en Ciencia de Datos", añoGraduacion :"2025 (en curso)" }
+               ],
+               intereses:["Tecnología avanzada", "Inteligencia artificial", "Modelo de las grandes empresas estadounidenses"],
+               idiomas:[
+                   { idioma:"Inglés", nivel:"B1" },
+                   { idioma:"Francés", nivel:"Básico" }
+               ],
+               contacto:{
+                   email:"emiliodavidescobar@gmail.com",
+                   telefono:"0998326719",
+                   linkedin:"www.linkedin.com/in/emilio-escobar-vela-05b19633a"
+               }
+           };
+
+           // Mostrar el currículum en formato legible
+           document.getElementById("curriculum").innerHTML = `
+               <h2>${curriculum.nombre}</h2>
+               <p>Edad:${curriculum.edad} años</p>
+               <p>Ubicación:${curriculum.ubicacion}</p>
+               <p>Profesión:${curriculum.profesion}</p>
+
+               <button class="accordion">Habilidades</button>
+               <div class="panel">
+                   <ul>${curriculum.habilidades.map(h => `<li>${h.nombre}: ${h.descripcion}</li>`).join('')}</ul>
+               </div>
+
+               <button class="accordion">Experiencia</button>
+               <div class="panel">
+                   <ul>${curriculum.experiencia.map(e => `<li>${e.descripcion}</li>`).join('')}</ul>
+               </div>
+
+               <button class="accordion">Educación</button>
+               <div class="panel">
+                   <ul>${curriculum.educacion.map(e => `<li>${e.titulo} en ${e.institucion} (${e.añoGraduacion})</li>`).join('')}</ul>
+               </div>
+
+               <button class="accordion">Intereses</button>
+               <div class="panel">
+                   <ul>${curriculum.intereses.map(i => `<li>${i}</li>`).join('')}</ul>
+               </div>
+
+               <button class="accordion">Idiomas</button>
+               <div class="panel">
+                   <ul>${curriculum.idiomas.map(i => `<li>${i.idioma}: ${i.nivel}</li>`).join('')}</ul>
+              </div>
+
+              <!-- Información de contacto -->
+              <h3>Contacto:</h3>
+              <p>Email:<a href="mailto:${curriculum.contacto.email}">${curriculum.contacto.email}</a></p>
+              <p>Teléfono:<a href="tel:${curriculum.contacto.telefono}">${curriculum.contacto.telefono}</a></p>
+              <p>LinkedIn:<a href="${curriculum.contacto.linkedin}" target="_blank">${curriculum.contacto.linkedin}</a></p>`;
+           
+           // Mostrar la sección para ingresar el nombre del usuario
+           document.getElementById("user-input").style.display = "block";
+
+           // Hacer que el currículum aparezca dinámicamente
+           const curriculumDiv = document.getElementById("curriculum");
+           curriculumDiv.classList.add("fade-in");
+           
+           setTimeout(() => {
+                curriculumDiv.classList.add("fade-in");
+                curriculumDiv.style.opacity = '1'; // Cambiar a visible
+                curriculumDiv.style.transform = 'translateY(0)'; // Regresar a posición original
+           }, 100); // Esperar un poco antes de aplicar la animación
+
+           // Agregar funcionalidad de acordeón
+           const accordions = document.querySelectorAll(".accordion");
+           accordions.forEach((accordion) => {
+              accordion.addEventListener("click", function() {
+                  this.classList.toggle("active");
+                  const panel = this.nextElementSibling;
+
+                  if (panel.style.display === "block") {
+                      panel.style.display = "none";
+                  } else {
+                      panel.style.display = "block";
+                  }
+              });
+           });
+       }
+
+       // Función para mostrar el mensaje final
+       function mostrarMensaje(nombre) {
+           const messageDiv = document.getElementById("final-message");
+           messageDiv.innerText = `Hola ${nombre}, gracias por visitar mi currículum.`;
+           messageDiv.classList.add("show"); // Añadir clase para hacer visible
+
+           setTimeout(() => {
+                messageDiv.classList.remove("show"); // Remover clase después de un tiempo
+                messageDiv.style.opacity = '0'; // Hacerlo invisible después
+           }, 3000); // Mantener visible por 3 segundos
+       }
+
+       // Generar el currículum al cargar la página
+       window.onload = generarCurriculum;
+
+       // Evento al hacer clic en el botón de enviar
+       document.getElementById("submit-button").addEventListener("click", () => {
+           const nombre = document.getElementById("user-name").value.trim();
+           if (!nombre) {
+               alert("Por favor ingresa tu nombre.");
+               return;
+           }
+           mostrarMensaje(nombre);
+       });
+   </script>
+</body>
+</html>
